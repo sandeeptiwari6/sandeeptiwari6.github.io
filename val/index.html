@@ -131,36 +131,114 @@
       speedMultiplier += 0.3; // gets faster every time
     });
 
-    function yesClicked() {
-      // launchConfetti();
-      // launchHearts();
+    // function yesClicked() {
+    //   // launchConfetti();
+    //   // launchHearts();
 
-      setTimeout(() => {
-        document.body.innerHTML = `
+    //   setTimeout(() => {
+    //     document.body.innerHTML = `
+    //       <div style="
+    //         height: 100vh;
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         background: #f8c8d8;
+    //         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    //         text-align: center;
+    //       ">
+    //         <div style="
+    //           background: white;
+    //           padding: 40px;
+    //           border-radius: 20px;
+    //           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    //         ">
+    //           <img src="../img/val/happy_pup.png" width="125" height="150">
+    //           <h1 style="font-size: 22px;">
+    //             Good job 👍🏽
+    //           </h1>
+    //         </div>
+    //       </div>
+    //     `;
+    //   }, 100);
+    // }
+
+    function yesClicked() {
+    launchConfetti();
+
+    setTimeout(() => {
+      document.body.innerHTML = `
+        <div style="
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #f8c8d8;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          text-align: center;
+        ">
           <div style="
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8c8d8;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 320px;
           ">
-            <div style="
-              background: white;
-              padding: 40px;
-              border-radius: 20px;
-              box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            ">
-              <img src="../img/val/happy_pup.png" width="125" height="150">
+            <img src="../img/val/happy_pup.png" width="125" height="150">
               <h1 style="font-size: 22px;">
                 Good job 👍🏽
               </h1>
+            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
+              Counting down to our Valentine’s Day…
+            </p>
+
+            <div id="countdown" style="
+              display: flex;
+              justify-content: space-between;
+              gap: 10px;
+              font-size: 14px;
+              font-weight: 600;
+            ">
+              <div><span id="days">0</span><br/>days</div>
+              <div><span id="hours">0</span><br/>hrs</div>
+              <div><span id="minutes">0</span><br/>min</div>
+              <div><span id="seconds">0</span><br/>sec</div>
             </div>
           </div>
-        `;
-      }, 100);
+        </div>
+      `;
+
+      startCountdown();
+    }, 100);
+  }
+
+  function startCountdown() {
+    const now = new Date();
+    let year = now.getFullYear();
+
+    let valentinesDay = new Date(year, 1, 14, 0, 0, 0);
+
+    if (now > valentinesDay) {
+      valentinesDay = new Date(year + 1, 1, 14, 0, 0, 0);
     }
+
+    function updateCountdown() {
+      const currentTime = new Date();
+      const diff = valentinesDay - currentTime;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
 
     function launchHearts() {
       for (let i = 0; i < 20; i++) {
